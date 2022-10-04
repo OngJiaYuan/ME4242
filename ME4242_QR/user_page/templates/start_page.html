@@ -6,7 +6,9 @@
 <style>
     body {
         background-color: #63C5DA;
-        }
+    }
+
+    
 </style>    
 <body>
 
@@ -15,13 +17,13 @@
 <video autoplay="autoplay" loop="loop" width="400" height="300" autoplay muted> 
     <source src="/ME4242_QR/user_page/templates/images/claw_machine.mp4" type="video/mp4" /> 
 </video>
-<a href="#" class="btn btn-info btn-lg" id="btn-play">
+<a href="#" class="play btn btn-info btn-lg " id="btn-play">
     <span class="glyphicon glyphicon-play"></span> Play
 </a>
 <script>
     var user_name = document.getElementById("btn-play");
     document.getElementById("btn-play").addEventListener("click", function(){
-        console.log('click') 
+        window.location = 'game_page'
     });
 </script> 
 </body>
