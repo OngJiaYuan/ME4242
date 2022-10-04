@@ -1,9 +1,28 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+    body {
+        background-color: #63C5DA;
+        }
+</style>    
 <body>
 
 <h1>Hello World!</h1>
-<p>Welcome to my first Django project!</p>
-
+<p>Welcome to my first Django project!</p>  
+<video autoplay="autoplay" loop="loop" width="400" height="300" autoplay muted> 
+    <source src="/ME4242_QR/user_page/templates/images/claw_machine.mp4" type="video/mp4" /> 
+</video>
+<a href="#" class="btn btn-info btn-lg" id="btn-play">
+    <span class="glyphicon glyphicon-play"></span> Play
+</a>
+<script>
+    var user_name = document.getElementById("btn-play");
+    document.getElementById("btn-play").addEventListener("click", function(){
+        console.log('click') 
+    });
+</script> 
 </body>
 </html>
