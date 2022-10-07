@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+<head> 
+    {% load static %}
+</head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -15,7 +18,7 @@
 <h1>Hello World!</h1>
 <p>Welcome to my first Django project!</p>  
 <video autoplay="autoplay" loop="loop" width="400" height="300" autoplay muted> 
-    <source src="/ME4242_QR/user_page/templates/images/claw_machine.mp4" type="video/mp4" /> 
+    <source src="{% static '/claw_machine.mp4' %}" type="video/mp4" /> 
 </video>
 <a href="#" class="play btn btn-info btn-lg " id="btn-play">
     <span class="glyphicon glyphicon-play"></span> Play

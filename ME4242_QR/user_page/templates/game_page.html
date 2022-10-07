@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html>
+<head> 
+    {% load static %}
+    <script src="{% static '/js/joy.js' %}"></script> 
+</head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -11,5 +15,10 @@
     
 </style>    
 <body>
+<div id="joyDiv" style="width:200px;height:200px;margin-bottom:20px;"></div>
+<script type="text/javascript">
+    // Create JoyStick object into the DIV 'joyDiv'
+    var joy = new JoyStick('joyDiv');
+</script>
 </body>
 </html>
