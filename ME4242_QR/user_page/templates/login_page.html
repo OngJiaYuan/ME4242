@@ -1,0 +1,17 @@
+<form action="action_page.php" method="post">
+
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" required>
+  
+  
+      <button type="submit" id="login">Login</button>
+      
+    </div>
+<script>
+        var user_name = document.getElementById("login");
+        document.getElementById("login").addEventListener("click", function(){
+            window.location = 'start_page'
+        });
+</script> 
+</form>

@@ -15,9 +15,9 @@
 </style>    
 <body>
 
-<h1>Hello World!</h1>
-<p>Welcome to my first Django project!</p>  
-<video autoplay="autoplay" loop="loop" width="400" height="300" autoplay muted> 
+<h1>Welcome to the game {{ username }}</h1>
+<p>Your existing credits: {{ credit }} </p>
+<video autoplay="autoplay" loop="loop" width="100vw"  autoplay muted> 
     <source src="{% static '/claw_machine.mp4' %}" type="video/mp4" /> 
 </video>
 <a href="#" class="play btn btn-info btn-lg " id="btn-play">
