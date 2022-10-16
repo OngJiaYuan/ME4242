@@ -1,17 +1,21 @@
-<form action="action_page.php" method="post">
-
+<!DOCTYPE html>
+<html>
+<body>
+  {% load crispy_forms_tags %}  
     <div class="container">
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
-  
-  
-      <button type="submit" id="login">Login</button>
+      <form method = "post">
+        {% csrf_token %}
+          <label for="uname"><b>Username</b></label>
+          <input type="text" placeholder="Enter Username" name="username" required>
+          <button type="submit" id="login">Login</button>
+      </form>
       
     </div>
 <script>
-        var user_name = document.getElementById("login");
+        var user_name = document.getElementsByName("uname");
         document.getElementById("login").addEventListener("click", function(){
             window.location = 'start_page'
         });
 </script> 
-</form>
+</body>
+</html>
