@@ -4,18 +4,18 @@ from django.template import loader
 from .models import User
 from django.contrib import messages
 from django.shortcuts import render, redirect
+import json
 
 
 
 def index(request):
     if request.method == 'POST':
-        user_form = User(request.POST)
-        print(user_form)
-        if user_form.is_valid():
-            messages.success(request, user_form)
-        else:
-            messages.error(request, 'Error saving form')
-        return render(request=request,template_name='start_page.html',context={"username":user[0]['username'],'credit' : user[0]['credit']})
+        user_form = request.POST
+        username = user_form.get('username','0')
+        print(username)
+        userdict = User.objects.all().values()
+        print(userdict)
+        return render(request=request,template_name='start_page.html',context={"username":userdict[0]['username'],'credit' : userdict[0]['credit']})
 
     user_form = User()
     user = User.objects.all().values()
