@@ -11,11 +11,16 @@ import json
 def index(request):
     if request.method == 'POST':
         user_form = request.POST
-        username = user_form.get('username','0')
-        print(username)
-        userdict = User.objects.all().values()
-        print(userdict)
-        return render(request=request,template_name='start_page.html',context={"username":userdict[0]['username'],'credit' : userdict[0]['credit']})
+        usernames = user_form.get('username','0')
+        print(usernames)
+        try:
+            userdict = User.objects.get(username=usernames)
+            
+        except:
+            userdict = User(username=usernames,credit=0)
+            userdict.save()
+        
+        return render(request=request,template_name='start_page.html',context={"username":userdict.username,'credit' : userdict.credit})
 
     user_form = User()
     user = User.objects.all().values()
