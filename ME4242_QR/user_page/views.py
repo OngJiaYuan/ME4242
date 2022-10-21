@@ -2,9 +2,7 @@
 from django.http import HttpResponse
 from django.template import loader
 from .models import User
-from django.contrib import messages
-from django.shortcuts import render, redirect
-import json
+from django.shortcuts import render
 
 
 
@@ -31,8 +29,8 @@ def index3(request):
     print(mymembers)
     template = loader.get_template('start_page.html')
     context = {
-        'username': mymembers[0]['username'],
-        'credit' : mymembers[0]['credit'],
+        'username': 'sudo account',
+        'credit' : 999,
     }
     return HttpResponse(template.render(context, request))
 

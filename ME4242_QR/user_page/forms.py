@@ -8,4 +8,4 @@ class UserForm(forms.ModelForm):
     # specify the name of model to use
     class Meta:
         model = User
-        fields = "__all__"
+        fields = "username"
