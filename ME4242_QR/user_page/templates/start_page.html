@@ -165,13 +165,13 @@
 <div class="form-popup" id="myForm">
     <form method = "post" class="form-container">
         {% csrf_token %}
-
             <h1>Top up</h1>
             <label for="topup"><b>Amount</b></label>
             <input type="text" placeholder="Enter Amount" name="topUp" required>
             <button type="submit" class="btn" name="topUpButton">Top up</button>
             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
             <input type="hidden" name="username" value="{{ instance.username }}">
+            <input type="hidden" name="credit" value="{{ instance.credit }}">
     </form>
   </div>
 
@@ -179,24 +179,58 @@
     <source src="{% static '/claw_machine.mp4' %}" type="video/mp4" /> 
 </video>
 <div class="popup">
-    <button  class="play btn btn-info btn-lg " id="btn-play">
-        <span class="glyphicon glyphicon-play"></span> Play
-    </button>
-    <span class="popuptext" id="myPopup">A Simple Popup!</span>
+    {% csrf_token %}
+        <input type="hidden" id="username" value="{{ instance.username }}">
+        <input type="hidden" id="credit" value="{{ instance.credit }}">
+        <button  class="play btn btn-info btn-lg " id="btn-play">
+            <span class="glyphicon glyphicon-play"></span> Play
+        </button>
+        <span class="popuptext" id="myPopup">Not enough credits !</span>
 </div>
+
+
 <script>
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
     document.getElementById("btn-play").addEventListener("click", function(){
-        console.log('click')
-        console.log(instance.credit)
-        var popup = document.getElementById("myPopup");
-        popup.classList.toggle("show");
-        if(instance.credit >= 0){
-            window.location = 'game_page'
+        var credit = document.getElementById('credit').value
+        var username = document.getElementById('username').value
+        const csrfToken = getCookie('csrftoken');
+        var user = {
+            username:username 
+        }
+        console.log(user)
+        console.log(csrfToken)
+        if(credit >0){
+            fetch("/start_page/game_page/", {
+                method: "POST",
+                credentials: 'include',
+                body: JSON.stringify({ value: user }),
+                headers: {
+                  "Content-type": "application/json;",
+                  "X-CSRFTOKEN": csrfToken
+                },
+              })
+            
         }
         else{
+            var popup = document.getElementById("myPopup");
             popup.classList.toggle("show");
-        }
-        
+        }      
     });
     function openForm() {
         document.getElementById("myForm").style.display = "block";
@@ -205,8 +239,6 @@
     function closeForm() {
         document.getElementById("myForm").style.display = "none";
       }
-
-   
 </script> 
 </body>
 </html>

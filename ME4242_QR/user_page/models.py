@@ -15,3 +15,7 @@ class User(models.Model):
     def one_play(self):
         self.credit -= 1
         self.save()
+    
+    def enough(self):
+        if self.credit > 0:
+            return True 

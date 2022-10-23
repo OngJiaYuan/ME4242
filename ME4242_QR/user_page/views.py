@@ -1,16 +1,18 @@
 from django.http import HttpResponse
 from django.template import loader
 from .models import User
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
-
+import json
+from django.http import HttpResponse
 context = {}
 
 def index(request):
     if request.method == 'POST':
         user_form = request.POST
+        print(user_form)
         usernames = user_form.get('username','0')
         print(usernames)
         try:
@@ -21,6 +23,7 @@ def index(request):
             userdict.save()
 
         context['instance'] = userdict
+
         return index3(request=request)
 
     user_form = User()
@@ -33,21 +36,26 @@ def index3(request):
     print(context)
     
     if request.method == 'POST':
-        user_top = request.POST
-        amount = user_top.get('topUp','0')
-        usernames = user_top.get('username','0')
-        userdict = User.objects.get(username=usernames)
-        userdict.top_up(amount=int(amount))
-        context['instance'] = userdict
-        return render(request=request,template_name='start_page.html',context=context)
+        if 'topUp' in request.POST:
+            user_top = request.POST
+            amount = user_top.get('topUp','0')
+            usernames = user_top.get('username','0')
+            userdict = User.objects.get(username=usernames)
+            userdict.top_up(amount=int(amount))
+            context['instance'] = userdict
+            return render(request=request,template_name='start_page.html',context=context)
         
     return render(request=request,template_name='start_page.html',context=context)
 
 def index2(request):
-    template = loader.get_template('game_page.html')
-    return HttpResponse(template.render())
+    if request.method == 'POST':
 
-def request(request):
-    print(request.GET.get("test"))
-    return JsonResponse({"test_confirmed": True})
+        usernames = json.loads(request.body)
+        usernames = usernames['value']
+        usernames = usernames['username']
+        userdict = User.objects.get(username=usernames)
+        userdict.one_play()
+        return HttpResponse(status=201)
+
+    return render(request=request,template_name='game_page.html',context=context)
 
