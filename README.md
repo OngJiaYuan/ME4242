@@ -6,7 +6,9 @@ python -m pip install -r requirements.txt<br />
 cd .\ME4242_QR\  <br />   
 py manage.py runserver<br />
 
+download npm and execute this command
 
+npm install -g jquery
 
 
 database handling:

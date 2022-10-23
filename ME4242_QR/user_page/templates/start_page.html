@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 <style>
     body {
         background-color: #63C5DA;
@@ -92,42 +94,109 @@
     .form-container .btn:hover, .open-button:hover {
         opacity: 1;
     }
+
+    .popup {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        }
+
+    /* The actual popup */
+    .popup .popuptext {
+        visibility: hidden;
+        width: 160px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 8px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -80px;
+    }
+
+    /* Popup arrow */
+    .popup .popuptext::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #555 transparent transparent transparent;
+    }
+
+    /* Toggle this class - hide and show the popup */
+    .popup .show {
+        visibility: visible;
+        -webkit-animation: fadeIn 1s;
+        animation: fadeIn 1s;
+    }
+
+    /* Add animation (fade in the popup) */
+    @-webkit-keyframes fadeIn {
+        from {opacity: 0;} 
+        to {opacity: 1;}
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity:1 ;}
+    }
 </style>    
 <body>
 
-<h1>Welcome to the game {{ username }}</h1>
+<h1>Welcome to the game {{ instance.username }}</h1>
 <div class"row">
     <div class="columnLateral">
-        <p>Your existing credits: {{ credit }} </p>
+        <p>Your existing credits: {{ instance.credit }} </p>
     </div>
     <div class="columnLateral">
         <button type="button" onclick="openForm()">Top up</button>
     </div>
 </div>
 <div class="form-popup" id="myForm">
-    <form action="/action_page.php" class="form-container">
-      <h1>Top up</h1>
-  
-      <label for="email"><b>Amount</b></label>
-      <input type="text" placeholder="Enter Amount" name="email" required>
-  
-  
-      <button type="submit" class="btn">Top up</button>
-      <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+    <form method = "post" class="form-container">
+        {% csrf_token %}
+
+            <h1>Top up</h1>
+            <label for="topup"><b>Amount</b></label>
+            <input type="text" placeholder="Enter Amount" name="topUp" required>
+            <button type="submit" class="btn" name="topUpButton">Top up</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+            <input type="hidden" name="username" value="{{ instance.username }}">
     </form>
   </div>
 
 <video autoplay="autoplay" loop="loop" width="100vw"  autoplay muted> 
     <source src="{% static '/claw_machine.mp4' %}" type="video/mp4" /> 
 </video>
-<button  class="play btn btn-info btn-lg " id="btn-play">
-    <span class="glyphicon glyphicon-play"></span> Play
-</button>
+<div class="popup">
+    <button  class="play btn btn-info btn-lg " id="btn-play">
+        <span class="glyphicon glyphicon-play"></span> Play
+    </button>
+    <span class="popuptext" id="myPopup">A Simple Popup!</span>
+</div>
 <script>
-    var user_name = document.getElementById("btn-play");
-    var existing_credit = credit
     document.getElementById("btn-play").addEventListener("click", function(){
-        window.location = 'game_page'
+        console.log('click')
+        console.log(instance.credit)
+        var popup = document.getElementById("myPopup");
+        popup.classList.toggle("show");
+        if(instance.credit >= 0){
+            window.location = 'game_page'
+        }
+        else{
+            popup.classList.toggle("show");
+        }
+        
     });
     function openForm() {
         document.getElementById("myForm").style.display = "block";
@@ -136,6 +205,8 @@
     function closeForm() {
         document.getElementById("myForm").style.display = "none";
       }
+
+   
 </script> 
 </body>
 </html>

@@ -1,10 +1,12 @@
-
 from django.http import HttpResponse
 from django.template import loader
 from .models import User
 from django.shortcuts import render
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from django.http import JsonResponse
 
-
+context = {}
 
 def index(request):
     if request.method == 'POST':
@@ -17,8 +19,9 @@ def index(request):
         except:
             userdict = User(username=usernames,credit=0)
             userdict.save()
-        
-        return render(request=request,template_name='start_page.html',context={"username":userdict.username,'credit' : userdict.credit})
+
+        context['instance'] = userdict
+        return index3(request=request)
 
     user_form = User()
     user = User.objects.all().values()
@@ -27,13 +30,24 @@ def index(request):
 def index3(request):
     mymembers = User.objects.all().values()
     print(mymembers)
-    template = loader.get_template('start_page.html')
-    context = {
-        'username': 'sudo account',
-        'credit' : 999,
-    }
-    return HttpResponse(template.render(context, request))
+    print(context)
+    
+    if request.method == 'POST':
+        user_top = request.POST
+        amount = user_top.get('topUp','0')
+        usernames = user_top.get('username','0')
+        userdict = User.objects.get(username=usernames)
+        userdict.top_up(amount=int(amount))
+        context['instance'] = userdict
+        return render(request=request,template_name='start_page.html',context=context)
+        
+    return render(request=request,template_name='start_page.html',context=context)
 
 def index2(request):
     template = loader.get_template('game_page.html')
     return HttpResponse(template.render())
+
+def request(request):
+    print(request.GET.get("test"))
+    return JsonResponse({"test_confirmed": True})
+
