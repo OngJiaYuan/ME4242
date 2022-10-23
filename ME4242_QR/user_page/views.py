@@ -64,5 +64,13 @@ def game_page(request):
         usernames = context['instance']
         userdict = User.objects.get(username=usernames)
         context['instance'] = userdict
+        if 'topUp' in request.POST:
+            user_top = request.POST
+            amount = user_top.get('topUp','0')
+            usernames = user_top.get('username','0')
+            userdict = User.objects.get(username=usernames)
+            userdict.top_up(amount=int(amount))
+            context['instance'] = userdict
+            return render(request=request,template_name='start_page.html',context=context)
         return render(request=request,template_name='start_page.html',context=context)
     return render(request=request,template_name='game_page.html',context=context)
