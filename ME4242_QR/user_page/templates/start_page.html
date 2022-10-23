@@ -224,8 +224,8 @@
                   "Content-type": "application/json;",
                   "X-CSRFTOKEN": csrfToken
                 },
-              })
-            
+              }).then((response) => console.log(response.status))
+            window.location.href = "{% url 'game_page' %}"  
         }
         else{
             var popup = document.getElementById("myPopup");

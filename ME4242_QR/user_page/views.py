@@ -49,7 +49,6 @@ def index3(request):
 
 def index2(request):
     if request.method == 'POST':
-
         usernames = json.loads(request.body)
         usernames = usernames['value']
         usernames = usernames['username']
@@ -59,3 +58,11 @@ def index2(request):
 
     return render(request=request,template_name='game_page.html',context=context)
 
+def game_page(request):
+    if request.method == 'POST':
+        print(context['instance'])
+        usernames = context['instance']
+        userdict = User.objects.get(username=usernames)
+        context['instance'] = userdict
+        return render(request=request,template_name='start_page.html',context=context)
+    return render(request=request,template_name='game_page.html',context=context)

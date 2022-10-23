@@ -43,8 +43,11 @@
         <div class="columnLateral">
             <div id="joyDiv" style="width:200px;height:200px;margin-bottom:20px;"></div>
         </div>
-        <div class="columnLateral">
-            <button class="button button4" type="submit">12px</button>
+        <div class="columnLateral">   
+                <form  method = "post">
+                    {% csrf_token %}
+                        <button class="button button4" type="submit">12px</button>
+                </form>
         </div>
     </div>
 
