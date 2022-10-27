@@ -157,9 +157,25 @@
 <div class"row">
     <div class="columnLateral">
         <p>Your existing credits: {{ instance.credit }} </p>
+        <video autoplay="autoplay" loop="loop" width="100vw"  autoplay muted> 
+            <source src="{% static '/claw_machine.mp4' %}" type="video/mp4" /> 
+        </video>
+        <div class="popup">
+            {% csrf_token %}
+                <input type="hidden" id="username" value="{{ instance.username }}">
+                <input type="hidden" id="credit" value="{{ instance.credit }}">
+                <button  class="play btn btn-info btn-lg " id="btn-play">
+                    <span class="glyphicon glyphicon-play"></span> Play
+                </button>
+                <span class="popuptext" id="myPopup">Not enough credits !</span>
+        </div>
     </div>
     <div class="columnLateral">
         <button type="button" onclick="openForm()">Top up</button>
+        
+    </div>
+    <div class="columnLateral">
+        <button type="button" onclick="logout()">Log out</button>
     </div>
 </div>
 <div class="form-popup" id="myForm">
@@ -175,18 +191,8 @@
     </form>
   </div>
 
-<video autoplay="autoplay" loop="loop" width="100vw"  autoplay muted> 
-    <source src="{% static '/claw_machine.mp4' %}" type="video/mp4" /> 
-</video>
-<div class="popup">
-    {% csrf_token %}
-        <input type="hidden" id="username" value="{{ instance.username }}">
-        <input type="hidden" id="credit" value="{{ instance.credit }}">
-        <button  class="play btn btn-info btn-lg " id="btn-play">
-            <span class="glyphicon glyphicon-play"></span> Play
-        </button>
-        <span class="popuptext" id="myPopup">Not enough credits !</span>
-</div>
+
+
 
 
 <script>
@@ -239,6 +245,10 @@
     function closeForm() {
         document.getElementById("myForm").style.display = "none";
       }
+
+    function logout() {
+        window.location.href = "{% url 'login_page' %}"  
+    }
 </script> 
 </body>
 </html>
