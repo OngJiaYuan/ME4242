@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view
 from django.http import JsonResponse
 import json
 from django.http import HttpResponse
+from ME4242_Fluid_control.Fluid_Control import end_game
 context = {}
 
 def index(request):
@@ -55,6 +56,7 @@ def index2(request):
         userdict = User.objects.get(username=usernames)
         userdict.one_play()
         context['instance'] = userdict
+        end_game()
         return render(request=request,template_name='game_page.html',context=context)
 
     return render(request=request,template_name='game_page.html',context=context)
