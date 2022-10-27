@@ -54,7 +54,8 @@ def index2(request):
         usernames = usernames['username']
         userdict = User.objects.get(username=usernames)
         userdict.one_play()
-        return HttpResponse(status=201)
+        context['instance'] = userdict
+        return render(request=request,template_name='game_page.html',context=context)
 
     return render(request=request,template_name='game_page.html',context=context)
 
@@ -74,3 +75,11 @@ def game_page(request):
             return render(request=request,template_name='start_page.html',context=context)
         return render(request=request,template_name='start_page.html',context=context)
     return render(request=request,template_name='game_page.html',context=context)
+
+
+
+def game_controller(request):
+    if request.method == 'POST':
+        print(context['instance'])
+        print(request)
+    return 

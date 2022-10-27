@@ -20,8 +20,14 @@
 <script>
         var user_name = document.getElementsByName("uname");
         document.getElementById("login").addEventListener("click", function(){
-            window.location = 'start_page'
-        });
+            if(username.length == 0)
+            { 
+              alert("enter something");  	
+               }
+            else{
+              window.location = 'start_page'
+            }
+        });    
 </script> 
 </body>
 </html>

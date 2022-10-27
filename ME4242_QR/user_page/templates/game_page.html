@@ -55,6 +55,18 @@
 <script type="text/javascript">
     // Create JoyStick object into the DIV 'joyDiv'
     var joy = new JoyStick('joyDiv');
+    let url = 'ws://'+ window.location.host + '/ws/socket-server/'
+    const controllerSocket = new WebSocket(url)
+    controllerSocket.onmessage = function(e){
+        let data = JSON.parse(e.data)
+        console.log('Data:',data)
+    }
+    setInterval(function () {
+        controllerSocket.send(JSON.stringify({
+            'x': joy.GetX(),
+            'y': joy.GetY()
+        }))
+    }, 50);
     
 </script>
 </body>
